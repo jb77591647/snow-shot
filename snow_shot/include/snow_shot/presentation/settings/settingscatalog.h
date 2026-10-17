@@ -310,6 +310,8 @@ enum class SettingsTextBinding {
     ScreenshotManualFilenameFormat,
     ScreenshotAutoFilenameFormat,
     ScreenRecordingVideoFilenameFormat,
+    MineruToken,
+    MineruLanguage,
 };
 
 struct SettingsTextDefinition {
@@ -525,6 +527,7 @@ enum class SettingsSectionReset {
     ScreenshotActionToolbar,
     ScreenRecordingActionToolbar,
     ScreenRecordingInteraction,
+    MineruApi,
 };
 
 enum class SettingsSectionItemLayout {

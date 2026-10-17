@@ -246,6 +246,13 @@ const QVector<ConfigurationSchemaEntry> kRawEntries = {
     {QStringLiteral("api_configuration/custom_models"), QJsonArray(),
      ConfigurationValueKind::Structured},
 #endif
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+    {QStringLiteral("api_configuration/mineru_token"), QString(), ConfigurationValueKind::String},
+#endif
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+    {QStringLiteral("api_configuration/mineru_language"), QStringLiteral("ch"),
+     ConfigurationValueKind::String},
+#endif
     {QStringLiteral("storage/schema_version"), 4, ConfigurationValueKind::Integer,
      ConfigurationIntegerRange{4, 4, 1}},
     {QStringLiteral("interface/theme_mode"),

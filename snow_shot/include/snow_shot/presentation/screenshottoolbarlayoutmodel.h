@@ -86,6 +86,7 @@ enum class Icon {
     PinToScreen,
     TextRecognition,
     TextTranslation,
+    MineruOcr,
     ScrollingScreenshot,
     Print,
     SaveAsFile,
@@ -224,6 +225,10 @@ struct EditorDescriptor {
             {"text-translation", "ScreenshotToolbarEditorSettingsWidget",
              QT_TRANSLATE_NOOP("ScreenshotToolbarEditorSettingsWidget", "Text translation"),
              Icon::TextTranslation},
+            {"mineru-ocr", "ScreenshotToolbarEditorSettingsWidget",
+             QT_TRANSLATE_NOOP("ScreenshotToolbarEditorSettingsWidget",
+                               "MinerU 文档识别"),
+             Icon::MineruOcr},
             {"scrolling-screenshot", "ScreenshotToolbarEditorSettingsWidget",
              QT_TRANSLATE_NOOP("ScreenshotToolbarEditorSettingsWidget", "Scrolling screenshot"),
              Icon::ScrollingScreenshot},
@@ -452,6 +457,7 @@ editorDescriptors(storage::ScreenshotToolbarLayoutKind kind) {
         {QStringLiteral("pin-to-screen")},
         {QStringLiteral("text-recognition")},
         {QStringLiteral("text-translation")},
+        {QStringLiteral("mineru-ocr")},
         {QStringLiteral("scrolling-screenshot")},
         {QStringLiteral("upload-to-cloud"), QStringLiteral("print"), QStringLiteral("quick-save"),
          QStringLiteral("save-as-file")},
@@ -608,6 +614,19 @@ normalizedLayout(const storage::ScreenshotToolbarLayout& input, const QStringLis
             hidden.contains(QStringLiteral("save-as-file"))) {
             result.hidden.push_back(QStringLiteral("print"));
             hidden.insert(QStringLiteral("print"));
+        }
+    }
+    if (known.contains(QStringLiteral("mineru-ocr")) &&
+        !positioned.contains(QStringLiteral("mineru-ocr")) &&
+        !hidden.contains(QStringLiteral("mineru-ocr"))) {
+        // New tool: give it its own position right after text translation unless the user
+        // already arranged it (stacked positions collapse into a popover, so keep it separate).
+        for (qsizetype index = 0; index < result.positions.size(); ++index) {
+            if (result.positions.at(index).contains(QStringLiteral("text-translation"))) {
+                result.positions.insert(index + 1, QStringList{QStringLiteral("mineru-ocr")});
+                positioned.insert(QStringLiteral("mineru-ocr"));
+                break;
+            }
         }
     }
     if (migrateScreenshotLayout && !result.positions.isEmpty() &&
@@ -991,6 +1010,8 @@ moveItemToHidden(const storage::ScreenshotToolbarLayout& input,
         return custom::TextRecognition();
     case Icon::TextTranslation:
         return custom::OcrTranslate();
+    case Icon::MineruOcr:
+        return adqt::icons::antd::outlined::FileText();
     case Icon::ScrollingScreenshot:
         return custom::ScrollingScreenshot();
     case Icon::QuickSave:

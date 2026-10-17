@@ -6,6 +6,7 @@
 #include "../pinned/screenshotclipboardplacementgeometry.h"
 #include "snow_shot/presentation/screenshotstylebinding.h"
 #include "snow_shot/presentation/screenshotqrcontroller.h"
+#include "snow_shot/presentation/mineruocrcontroller.h"
 #include "snow_shot/presentation/screenshotencodingsettings.h"
 #include "snow_shot/presentation/pinnedgeometry.h"
 #include "snow_shot/presentation/screenshotautofiltercontroller.h"
@@ -454,6 +455,7 @@ struct ScreenshotController::Impl final : public ScreenshotToolbarCommandSink,
     void setShowOriginalImage(bool show) override;
     void toggleTextEditing() override;
     void toggleTextTranslation() override;
+    void beginMineruOcr() override;
     void jumpToTranslationPage() override;
     void resetTextEditing() override;
     void openTextTranslationSettings() override;
@@ -625,6 +627,9 @@ struct ScreenshotController::Impl final : public ScreenshotToolbarCommandSink,
     QPointer<SnowShotApiClient> m_tableRecognition;
 #endif
     std::unique_ptr<ScreenshotOcrController> m_ocrController;
+#if SNOW_SHOT_ENABLE_TEXT_TRANSLATION
+    std::unique_ptr<MineruOcrController> m_mineruController;
+#endif
     std::unique_ptr<ScreenshotSelectionResizeWorkflow> m_selectionResizeWorkflow;
     std::unique_ptr<ScreenshotScrollingCaptureController> m_scrollingCaptureController;
     std::unique_ptr<ScreenshotOverlayInputHandler> m_overlayInputHandler;
@@ -2948,6 +2953,19 @@ void ScreenshotController::Impl::toggleTextTranslation() {
     } else {
         m_ocrController->beginTextTranslation();
     }
+#endif
+}
+
+void ScreenshotController::Impl::beginMineruOcr() {
+#if SNOW_SHOT_ENABLE_TEXT_TRANSLATION
+    if (m_mineruController == nullptr) {
+        m_mineruController = std::make_unique<MineruOcrController>(
+            MineruOcrController::Context{m_displaySession, m_selection,
+                                         *m_overlayCoordinator,
+                                         [this]() { cancelCapture(); }},
+            &owner);
+    }
+    m_mineruController->begin();
 #endif
 }
 

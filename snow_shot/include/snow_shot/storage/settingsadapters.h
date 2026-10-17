@@ -103,6 +103,10 @@ class ApiConfigurationSettings final {
     bool setCustomModels(const CustomAiModels& models) const;
     [[nodiscard]] TextTranslationConfigurations textTranslationConfigurations() const;
     bool setTextTranslationConfigurations(const TextTranslationConfigurations& values) const;
+    [[nodiscard]] QString mineruToken() const;
+    bool setMineruToken(const QString& value) const;
+    [[nodiscard]] QString mineruLanguage() const;
+    bool setMineruLanguage(const QString& value) const;
 };
 #endif
 

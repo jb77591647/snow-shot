@@ -511,6 +511,7 @@ class ScreenshotToolPalette final : public QWidget,
     void serialNumberRequested();
     void ocrRequested();
     void textTranslationRequested();
+    void mineruOcrRequested();
     void tableRequested();
     void qrRequested();
     void latexRequested();
@@ -931,6 +932,7 @@ class ScreenshotToolPalette final : public QWidget,
     adqt::widgets::AdButton* m_serialNumberButton = nullptr;
     adqt::widgets::AdButton* m_ocrButton = nullptr;
     adqt::widgets::AdButton* m_textTranslationButton = nullptr;
+    adqt::widgets::AdButton* m_mineruOcrButton = nullptr;
     adqt::widgets::AdButton* m_tableButton = nullptr;
     adqt::widgets::AdButton* m_tableOptionButton = nullptr;
     adqt::widgets::AdButton* m_qrButton = nullptr;

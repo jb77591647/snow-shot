@@ -466,6 +466,33 @@ bool ApiConfigurationSettings::setTextTranslationConfigurations(
 }
 #endif
 
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+QString ApiConfigurationSettings::mineruToken() const {
+    return cache().value(QStringLiteral("api_configuration/mineru_token")).toString();
+}
+#endif
+
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+bool ApiConfigurationSettings::setMineruToken(const QString& value) const {
+    return cache().setValue(QStringLiteral("api_configuration/mineru_token"), value.trimmed());
+}
+#endif
+
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+QString ApiConfigurationSettings::mineruLanguage() const {
+    const QString value =
+        cache().value(QStringLiteral("api_configuration/mineru_language")).toString().trimmed();
+    return value.isEmpty() ? QStringLiteral("ch") : value;
+}
+#endif
+
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+bool ApiConfigurationSettings::setMineruLanguage(const QString& value) const {
+    return cache().setValue(QStringLiteral("api_configuration/mineru_language"),
+                            value.trimmed());
+}
+#endif
+
 QColor InterfaceSettings::themePrimaryColor() const {
     return colorValue(QStringLiteral("interface/theme_primary_color"));
 }

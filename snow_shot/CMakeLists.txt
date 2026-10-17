@@ -1901,6 +1901,10 @@ set(PROJECT_CXX_SOURCES
     src/presentation/core/screenshotsmartselectiontransition.cpp
     src/presentation/ocr/screenshotocrcontroller.cpp
     src/presentation/ocr/screenshotrecognitionsessioncontroller.cpp
+    src/presentation/ocr/mineruocrcontroller.cpp
+    include/snow_shot/presentation/mineruocrcontroller.h
+    include/snow_shot/network/mineruapiclient.h
+    src/network/mineruapiclient.cpp
     src/presentation/ocr/screenshotocrlayout.cpp
     src/presentation/ocr/screenshotrecognitionwindow.cpp
     src/presentation/ocr/screenshottabledocument.cpp

@@ -3916,6 +3916,27 @@ QVector<SettingsPageDefinition> builtInPages() {
 #endif
 
 #if SNOW_SHOT_ENABLE_API_CONFIGURATION
+             {QStringLiteral("mineru"),
+              settingsText(QT_TRANSLATE_NOOP("SettingsCatalog", "MinerU 文档识别")),
+              settingsText(QT_TRANSLATE_NOOP(
+                  "SettingsCatalog", "Cloud document OCR via the MinerU precise parsing API")),
+              SettingsSectionReset::MineruApi,
+              {textFormatItem(QStringLiteral("api.mineru-token"),
+                              QT_TRANSLATE_NOOP("SettingsCatalog", "API token"),
+                              QT_TRANSLATE_NOOP(
+                                  "SettingsCatalog",
+                                  "Create a token on the MinerU API management page"),
+                              QStringLiteral("api_configuration/mineru_token"),
+                              SettingsTextBinding::MineruToken),
+               textFormatItem(QStringLiteral("api.mineru-language"),
+                              QT_TRANSLATE_NOOP("SettingsCatalog", "Document language"),
+                              QT_TRANSLATE_NOOP("SettingsCatalog",
+                                                "Language hint for recognition, e.g. ch or en"),
+                              QStringLiteral("api_configuration/mineru_language"),
+                              SettingsTextBinding::MineruLanguage)}},
+#endif
+
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
              {QStringLiteral("snow-shot-server"),
               settingsText(QT_TRANSLATE_NOOP("SettingsCatalog", "Snow Shot server")),
               settingsText(QT_TRANSLATE_NOOP("SettingsCatalog",
@@ -5487,6 +5508,12 @@ QStringList SettingsCatalog::validationErrors() const {
                         break;
                     case SettingsTextBinding::ScreenRecordingVideoFilenameFormat:
                         expectedKey = QStringLiteral("screen_recording/video_filename_format");
+                        break;
+                    case SettingsTextBinding::MineruToken:
+                        expectedKey = QStringLiteral("api_configuration/mineru_token");
+                        break;
+                    case SettingsTextBinding::MineruLanguage:
+                        expectedKey = QStringLiteral("api_configuration/mineru_language");
                         break;
                     }
                     if (itemDefinition.configurationKey != expectedKey || schemaEntry == nullptr ||

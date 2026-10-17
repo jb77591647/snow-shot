@@ -5236,6 +5236,9 @@ ScreenshotToolPalette::actionToolSourceButton(const QString& itemId) const {
     if (itemId == QStringLiteral("text-translation")) {
         return m_textTranslationButton;
     }
+    if (itemId == QStringLiteral("mineru-ocr")) {
+        return m_mineruOcrButton;
+    }
     if (itemId == QStringLiteral("scrolling-screenshot")) {
         return m_scrollingScreenshotButton;
     }
@@ -5866,6 +5869,7 @@ void ScreenshotToolPalette::applyMainToolbarLayout(bool notify) {
         m_pinButton,
         m_ocrButton,
         m_textTranslationButton,
+        m_mineruOcrButton,
         m_scrollingScreenshotButton,
         m_printButton,
         m_saveButton,
@@ -6319,6 +6323,18 @@ bool ScreenshotToolPalette::addMainSecondaryButtons(const Options& options, QBox
         addButton(m_textTranslationButton);
         connect(m_textTranslationButton, &adqt::widgets::AdButton::clicked, this,
                 [this]() { activateActionTool(QStringLiteral("text-translation")); });
+    }
+
+    if ((options.showTextTranslationTool && snow_shot::app::edition::textTranslation)) {
+        m_mineruOcrButton = addToolButton(
+            QT_TRANSLATE_NOOP("ScreenshotToolPalette", "MinerU 文档识别"),
+            adqt::icons::antd::outlined::FileText());
+        m_mineruOcrButton->setObjectName(QStringLiteral("screenshotMineruOcrButton"));
+        m_mineruOcrButton->setBusyIndicatorPresentation(
+            adqt::widgets::AdButton::BusyIndicatorPresentation::IsolatedSurface);
+        addButton(m_mineruOcrButton);
+        connect(m_mineruOcrButton, &adqt::widgets::AdButton::clicked, this,
+                [this]() { emit mineruOcrRequested(); });
     }
 
     if (options.showScrollingScreenshotTool) {

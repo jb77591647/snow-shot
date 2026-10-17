@@ -1765,6 +1765,18 @@ QString BuiltInSettingsBackend::textValue(SettingsTextBinding binding) const {
         return storage::ScreenshotSettings().autoSaveFilenameFormat();
     case SettingsTextBinding::ScreenRecordingVideoFilenameFormat:
         return storage::RecordingSettings().videoFilenameFormat();
+    case SettingsTextBinding::MineruToken:
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+        return storage::ApiConfigurationSettings().mineruToken();
+#else
+        return {};
+#endif
+    case SettingsTextBinding::MineruLanguage:
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+        return storage::ApiConfigurationSettings().mineruLanguage();
+#else
+        return {};
+#endif
     }
     return {};
 }
@@ -1783,6 +1795,18 @@ bool BuiltInSettingsBackend::applyTextValue(SettingsTextBinding binding, const Q
         return storage::ScreenshotSettings().setAutoSaveFilenameFormat(value);
     case SettingsTextBinding::ScreenRecordingVideoFilenameFormat:
         return storage::RecordingSettings().setVideoFilenameFormat(value);
+    case SettingsTextBinding::MineruToken:
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+        return storage::ApiConfigurationSettings().setMineruToken(value);
+#else
+        return false;
+#endif
+    case SettingsTextBinding::MineruLanguage:
+#if SNOW_SHOT_ENABLE_API_CONFIGURATION
+        return storage::ApiConfigurationSettings().setMineruLanguage(value);
+#else
+        return false;
+#endif
     }
     return false;
 }
@@ -2328,7 +2352,8 @@ bool BuiltInSettingsBackend::resetSection(SettingsSectionReset reset) {
 #endif
 #if !SNOW_SHOT_ENABLE_API_CONFIGURATION
     if (reset == SettingsSectionReset::Server || reset == SettingsSectionReset::CustomAiModels ||
-        reset == SettingsSectionReset::TextTranslationConfigurations)
+        reset == SettingsSectionReset::TextTranslationConfigurations ||
+        reset == SettingsSectionReset::MineruApi)
         return false;
 #endif
 #if !SNOW_SHOT_ENABLE_EXTENDED_FEATURES
@@ -2344,6 +2369,7 @@ bool BuiltInSettingsBackend::resetSection(SettingsSectionReset reset) {
     case SettingsSectionReset::PinToScreenToolbar:
     case SettingsSectionReset::ScreenshotActionToolbar:
     case SettingsSectionReset::ScreenRecordingActionToolbar:
+    case SettingsSectionReset::MineruApi:
         return storage::ApplicationStorage::instance().configuration().setValues(
             sectionDefaults(reset));
     case SettingsSectionReset::ScreenshotEditorShortcuts:

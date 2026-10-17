@@ -97,6 +97,7 @@ class ScreenshotToolbarCommandSink {
     virtual void toggleTextTranslation() {
         beginTextTranslation();
     }
+    virtual void beginMineruOcr() {}
     virtual void jumpToTranslationPage() {}
     virtual void resetTextEditing() {}
     virtual void openTextTranslationSettings() {}

@@ -273,6 +273,10 @@ void ScreenshotToolbarWindow::connectToolCommands(ScreenshotToolPalette& toolPal
             [this]() { m_commands.toggleTextTranslation(); });
 #endif
 #if SNOW_SHOT_ENABLE_TEXT_TRANSLATION
+    connect(&toolPalette, &ScreenshotToolPalette::mineruOcrRequested, this,
+            [this]() { m_commands.beginMineruOcr(); });
+#endif
+#if SNOW_SHOT_ENABLE_TEXT_TRANSLATION
     connect(&toolPalette, &ScreenshotToolPalette::jumpToTranslationPageRequested, this,
             [this]() { m_commands.jumpToTranslationPage(); });
 #endif

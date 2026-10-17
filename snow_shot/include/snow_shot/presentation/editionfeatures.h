@@ -18,6 +18,8 @@ namespace snow_shot::presentation {
         return edition::imageConversion;
     if (id == QStringLiteral("text-translation"))
         return edition::textTranslation;
+    if (id == QStringLiteral("mineru-ocr"))
+        return edition::textTranslation;
     return true;
 }
 
