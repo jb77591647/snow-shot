@@ -213,8 +213,7 @@ if (-not $SkipDependencyInstall) {
             "--host-triplet=$($windowsTarget.HostTriplet)",
               "--x-feature=snow-shot"
           ) + $overlayPortArguments + @(
-              "--overlay-triplets=$(Join-Path $repoRoot 'cmake/vcpkg-overlay-triplets')",
-              "--clean-after-build"
+              "--overlay-triplets=$(Join-Path $repoRoot 'cmake/vcpkg-overlay-triplets')"
           )
         if ($variant -eq "Dynamic") {
             $vcpkgArguments += "--x-feature=full-codecs"
